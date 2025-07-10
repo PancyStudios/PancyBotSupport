@@ -35,17 +35,33 @@ const logLevels = {
 
 winston.addColors(logLevels.colors);
 
+
+// 1. Creamos un formato personalizado para poner el nivel en mayúsculas
+const upperCaseFormat = winston.format((info) => {
+    info.level = info.level.toUpperCase();
+    return info;
+});
+
+// 2. Combinamos los formatos en el orden correcto
+const loggerFormat = winston.format.combine(
+    // Primero, añade el timestamp al objeto 'info'
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    // Luego, transforma el nivel a mayúsculas
+    upperCaseFormat(),
+    // Después, aplica el color al nivel ya en mayúsculas
+    winston.format.colorize(),
+    // Finalmente, imprime todo con el formato deseado
+    winston.format.printf((info) => {
+        // Ahora info.level ya está en mayúsculas y con color
+        return `[${info.timestamp}] [${info.level}]: ${info.message}`;
+    })
+);
+
 const logger = winston.createLogger({
     level: process.env.enviroment === 'dev' ? 'system' : 'info',
     levels: logLevels.levels,
 
-    format: winston.format.combine(
-        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-        winston.format.colorize({ all: true }),
-        winston.format.printf((info) => {
-            return `[${info.timestamp}] [${info.level.toUpperCase()}]: ${info.message}`;
-        })
-    ),
+    format: loggerFormat,
 
     transports: [
         new winston.transports.Console(),

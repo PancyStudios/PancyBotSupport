@@ -23,5 +23,5 @@ WebManager.get("/", (_, res) => {
 })
 
 WebManager.listen(process.env.PORT, () => {
-    logger.info("Liste de soporte de discord esta activo")
+    logger.info("El bot de soporte esta activo")
 })

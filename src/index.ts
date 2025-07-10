@@ -10,11 +10,18 @@
 // ni siquiera la garantía implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.
 // Consulte la Licencia Pública General de GNU para obtener más detalles.
 
+import { ErrorManager } from "./handlers/logger/Errors";
 import { ClientExtend } from "./structure/Client";
+import {logger } from "./handlers/logger/Console";
 import { WebManager } from "./handlers/web";
 import { config } from "dotenv";
 config();
 
 export const client = new ClientExtend();
 export const server = WebManager;
+export const error = new ErrorManager(logger);
+
+setTimeout(async () => {
+    await client.init();
+}, 200)
 
