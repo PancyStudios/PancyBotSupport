@@ -91,7 +91,7 @@ export class ClientExtend extends Client{
 
         // --- REGISTRO DE COMANDOS ---
         // Se procesan todas las carpetas dentro de commands/Guilds (commands, subcommands, etc.)
-        const commandDirs = await glob(`${process.cwd()}/src/commands/*`);
+        const commandDirs = await glob(`${process.cwd()}/src/commands/guild/*`);
 
         for (const dirPath of commandDirs) {
             const dirName = path.basename(dirPath);
@@ -104,6 +104,7 @@ export class ClientExtend extends Client{
                         const command: CommandType = await this.importFile(filePath);
                         if (!command?.name) continue;
 
+                        logger.debug(`${filePath}: ${command.name}`);
                         this.commands.set(command.name, command);
                         this.slashCommands.push(command);
                     }

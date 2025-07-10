@@ -58,7 +58,7 @@ const loggerFormat = winston.format.combine(
 );
 
 const logger = winston.createLogger({
-    level: process.env.enviroment === 'dev' ? 'system' : 'info',
+    level: 'system',
     levels: logLevels.levels,
 
     format: loggerFormat,

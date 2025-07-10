@@ -17,6 +17,8 @@ import { WebManager } from "./handlers/web";
 import { config } from "dotenv";
 config();
 
+logger.info(process.env.webhook)
+
 export const client = new ClientExtend();
 export const server = WebManager;
 export const error = new ErrorManager(logger);

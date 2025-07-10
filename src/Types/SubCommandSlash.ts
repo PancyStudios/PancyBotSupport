@@ -24,7 +24,6 @@ interface RunOptions {
     client: ClientExtend;
     interaction: ExtendedInteraction;
     args: CommandInteractionOptionResolver;
-    prefix: string;
 }
 
 type RunFunction = (options: RunOptions) => any;
